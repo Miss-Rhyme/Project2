@@ -1,0 +1,39 @@
+version: "3.7"
+services:
+  nginx:
+    image: nginx:alpine
+    volumes:
+    - type: bind
+      source: ./nginx.conf
+      target: /etc/nginx/nginx.conf
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+    depends on:
+      - service1
+      - service2
+      - service3
+      - service4
+  service1:
+    image: flask
+    build:
+      context: /etc/project2/service1
+      dockerfile: Dockerfile
+  service2:
+    image: flask
+    build:
+      context: /etc/project2/service2
+      dockerfile: Dockerfile
+  service3:
+    image: flask
+    build:
+      context: /etc/project2/service3
+      dockerfile: Dockerfile
+  service4:
+    image: flask
+    build:
+      context: /etc/project2/service4
+      dockerfile: Dockerfile
+    environment:
+
