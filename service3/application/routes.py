@@ -10,4 +10,4 @@ def codenumber():
     
     num = random.randint(1,5)
 
-    return num
+    return {'numbervalue':f'{num}'}

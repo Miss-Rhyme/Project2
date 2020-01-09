@@ -12,4 +12,4 @@ def codeletter():
 
     letter = random.choice(letters)
 
-    return letter
+    return {'lettervalue':f'{letter}'}

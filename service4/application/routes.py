@@ -6,18 +6,24 @@ from application.models import Fortune
 
 import requests
 
-@app.route('/getdcode', methods=['GET', 'POST'])
+@app.route('/getcode', methods=['GET', 'POST'])
 
 def getcode():
 
-    getletter = requests.post( "http://service2:5000/codeLetter" )
+    getletter = requests.get( "http://service2:5000/codeLetter" )
     
 
-    getnumber = requests.post( "http://service3:5000/codeNumeber" )
+    getnumber = requests.get( "http://service3:5000/codeNumber" )
 
 
-    fortunecode = str(getletter) + str(getnumber)
+    codels = []
 
-    fortunedraw = Fortune.query.filter_by(code = fortunecode).all()
+    codels.append(getnumber)
+    codels.append(getletter)
 
-    return {'fortune':fortunedraw}
+    coderesult = "".join(codels)
+
+
+    fortuneresult = Fortune.query.filter_by(fortune = coderesult).first()
+
+    return {'fortune':fortuneresult}

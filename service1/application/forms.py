@@ -4,6 +4,6 @@ from wtforms import SubmitField
 
 from application.models import Fortune
 
-class FortuneDraw(FlaskForm):
+class FortuneButton(FlaskForm):
     
     submit = SubmitField('Tell me my fortune!')
