@@ -6,14 +6,14 @@ from application.models import Fortune
 
 import requests
 
-@app.route('/getcode', methods=['GET', 'POST'])
+@app.route('/fortune', methods=['GET', 'POST'])
 
 def getcode():
 
-    getletter = requests.get( "http://service2:5000/codeLetter" )
+    getletter = requests.POST.get( "http://service2:5002/codeLetter" )
     
 
-    getnumber = requests.get( "http://service3:5000/codeNumber" )
+    getnumber = requests.POST.get( "http://service3:5003/codeNumber" )
 
 
     codels = []
@@ -26,4 +26,6 @@ def getcode():
 
     fortuneresult = Fortune.query.filter_by(fortune = coderesult).first()
 
-    return {'fortune':fortuneresult}
+    #return {'fortune':fortuneresult}
+
+    return fortuneresult

@@ -1,9 +1,9 @@
 from application import db
 
 
-
 class Fortune(db.Model):
-    code = db.Column(db.String(10), nullable=False, unique=True)
+   ### id = db.Column(db.Integer
+    code = db.Column(db.String(10), nullable=False, unique=True, primary_key=True)
     fortune = db.Column(db.String(200), nullable=False,unique=True)
 
     def __repr__(self):

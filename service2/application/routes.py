@@ -2,6 +2,8 @@ from flask import render_template,request
 
 from application import app
 
+import requests
+
 import random
 
 @app.route('/codeletter', methods=['POST'])
@@ -12,4 +14,6 @@ def codeletter():
 
     letter = random.choice(letters)
 
-    return {'lettervalue':f'{letter}'}
+    #return {'lettervalue':f'{letter}'}
+
+    return letter

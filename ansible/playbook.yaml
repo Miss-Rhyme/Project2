@@ -1,0 +1,104 @@
+##make inventory for hosts and fill hosts ##
+- hosts: 
+  become: true
+  tasks:
+  - name: "make jenkins user"
+    user:
+      name: jenkins
+      shell: /bin/bash
+  - name: "ssh folder"
+    file:
+      path: /home/jenkins/.ssh
+      state: directory
+      mode: "0700"
+      owner: jenkins
+      group: jenkins
+  - name: "install private key"
+    copy:
+      src: ~/.ssh/ansible_id_rsa
+      dest: /home/jenkins/.ssh/id_rsa
+      owner: jenkins
+      group: jenkins
+      mode: u=rw,g=,o=
+  - name: "install java"
+    apt:
+      name: openjdk-8-jdk
+      state: latest
+  - name: "jenkins gpg key"
+    apt_key:
+      url: "https://pkg.jenkins.io/debian/jenkins.io.key"
+      state: present
+  - name: "jenkins apt repo"
+    apt_repository:
+      repo: "deb http://pkg.jenkins.io/debian-stable binary/"
+      state: present
+  - name: "jenkins install"
+    apt:
+      name: jenkins
+      state: latest
+      update_cache: true
+  - name: "jenkins service"
+    service:
+      name: jenkins
+      state: started
+  - name: "docker prerequisites"
+    apt:
+      pkg:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg2
+      - software-properties-common
+      state: latest
+      update_cache: true
+  - name: "docker gpg key"
+    apt_key:
+      url: "https://download.docker.com/linux/debian/gpg"
+      state: present
+  - name: "docker apt repo"
+    apt_repository:
+      repo: "deb [arch=amd64] https://download.docker.com/linux/debian stretch stable"
+      state: present
+  - name: "docker install"
+    apt:
+      pkg:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      state: latest
+      update_cache: true
+  - name: "start docker service"
+    service:
+      name: docker
+      state: started
+  - name: "python pip"
+    apt:
+      name: python-pip
+      state: latest
+      update_cache: true
+  - name: "docker sdk"
+    pip:
+      name: docker
+  - name: "docker registry container"
+    docker_container:
+      name: registry
+      image: registry
+      ports:
+      - "5000:5000"
+  - name: Init a new swarm with default parameters
+    docker_swarm:
+      state: present
+  - name: "make daemon.json file"
+      file:
+        path: /etc/docker/daemon.json
+        state: touch
+        mode: "0700" 
+  - name: "write content to .json file"
+      copy:
+        content: "{
+                        'insecure_registries' : [jenkins:5000]
+                  }"
+        dest: /etc/docker/daemon.json
+  - name: Init a new swarm with default parameters
+      docker_swarm:
+        state: present
