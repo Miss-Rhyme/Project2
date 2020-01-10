@@ -1,5 +1,4 @@
-##make inventory for hosts and fill hosts ##
-- hosts: 
+- hosts: jenswarm
   become: true
   tasks:
   - name: "make jenkins user"
@@ -13,13 +12,29 @@
       mode: "0700"
       owner: jenkins
       group: jenkins
-  - name: "install private key"
+- hosts: jenonly
+  become: true
+  tasks: 
+  - name: "install private key to jenkins"
     copy:
       src: ~/.ssh/ansible_id_rsa
-      dest: /home/jenkins/.ssh/id_rsa
+      dest: /home/jenkins/.ssh/authorized_keys
       owner: jenkins
       group: jenkins
-      mode: u=rw,g=,o=
+      mode: "0600"
+- hosts: swarmonly
+  become: true
+  tasks:
+  - name: "install public key to swarm"
+    copy:
+      src: ~/.ssh/ansible_id_rsa.pub
+      dest: /home/jenkins/.ssh/authorized_keys
+      owner: jenkins
+      group: jenkins
+      mode: "0600"
+- hosts: jenonly
+  become: true
+  tasks:
   - name: "install java"
     apt:
       name: openjdk-8-jdk
@@ -41,6 +56,9 @@
     service:
       name: jenkins
       state: started
+- hosts: jenswarm
+  become: true
+  tasks:
   - name: "docker prerequisites"
     apt:
       pkg:
@@ -85,20 +103,20 @@
       image: registry
       ports:
       - "5000:5000"
-  - name: Init a new swarm with default parameters
+  - name: "make daemon.json file"
+    file:
+      path: /etc/docker/daemon.json
+      state: touch
+      mode: "0700" 
+  - name: "write content to .json file"
+    copy:
+      content: "{
+                 'insecure_registries' : [jenkins:5000] 
+                        }"
+      dest: /etc/docker/daemon.json
+- hosts: swarmonly
+  become: true
+  tasks:
+  - name: "Init a new swarm with default parameters"
     docker_swarm:
       state: present
-  - name: "make daemon.json file"
-      file:
-        path: /etc/docker/daemon.json
-        state: touch
-        mode: "0700" 
-  - name: "write content to .json file"
-      copy:
-        content: "{
-                        'insecure_registries' : [jenkins:5000]
-                  }"
-        dest: /etc/docker/daemon.json
-  - name: Init a new swarm with default parameters
-      docker_swarm:
-        state: present

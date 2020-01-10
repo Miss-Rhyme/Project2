@@ -18,7 +18,7 @@ def home():
 
     if request.method=='POST':
 
-        getfortune = requests.POST.get('http://service4:5004/fortune')
+        getfortune = requests.get('http://service4:5004/fortune')
 
         return render_template('home.html', title='Home', Fortune=getfortune, form=form)
 

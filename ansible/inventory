@@ -1,9 +1,24 @@
-[#GROUPNAME]
+[jenswarm]
 
-##INSERT IP/ADDRESSNAMES
+p2jenkins
+swarm-master
+
+[jenonly]
+
+p2jenkins
+
+[swarmonly]
+
+swarm-master
 
 
-[#GROUPNAME:vars]
-ansible_user=#USERNAMEOFCNUSER
+[jenonly:vars]
+ansible_user=rimakuma93
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
-ansible_ssh_private_key_file=~/.ssh/id_rsa
+ansible_ssh_private_key_file=~/.ssh/ansible_id_rsa
+
+[swarmonly:vars]
+ansible_user=rimakuma93
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+ansible_ssh_public_key_file=~/.ssh/ansible_id_rsa.pub
+

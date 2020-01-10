@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   nginx:
-    image: nginx:alpine
+    image: nginx:latest
     volumes:
     - type: bind
       source: ./nginx.conf
@@ -10,30 +10,51 @@ services:
       - target: 80
         published: 80
         protocol: tcp
-    depends on:
+    depends_on:
       - service1
       - service2
       - service3
       - service4
   service1:
-    image: flask
+    image: service1
     build:
-      context: /etc/project2/service1
-      dockerfile: Dockerfile
+      context: ./service1
+    environment:
+      - MY_SQL_USER=${MY_SQL_USER}
+      - MY_SQL_PASSWORD=${MY_SQL_PASSWORD}
+      - MY_SQL_DB=${MY_SQL_DB}
+      - MY_SQL_URL=${MY_SQL_URL}
+      - SECRET_KEY=${SECRET_KEY}
   service2:
-    image: flask
+    image: service2
     build:
-      context: /etc/project2/service2
-      dockerfile: Dockerfile
+      context: ./service2
+    environment:
+      - MY_SQL_USER=${MY_SQL_USER}
+      - MY_SQL_PASSWORD=${MY_SQL_PASSWORD}
+      - MY_SQL_DB=${MY_SQL_DB}
+      - MY_SQL_URL=${MY_SQL_URL}
+      - SECRET_KEY=${SECRET_KEY}
+
   service3:
-    image: flask
+    image: service3
     build:
-      context: /etc/project2/service3
-      dockerfile: Dockerfile
+      context: ./service3
+    environment:
+      - MY_SQL_USER=${MY_SQL_USER}
+      - MY_SQL_PASSWORD=${MY_SQL_PASSWORD}
+      - MY_SQL_DB=${MY_SQL_DB}
+      - MY_SQL_URL=${MY_SQL_URL}
+      - SECRET_KEY=${SECRET_KEY}
+
   service4:
-    image: flask
+    image: service4
     build:
-      context: /etc/project2/service4
+      context: ./service4
       dockerfile: Dockerfile
     environment:
-
+      - MY_SQL_USER=${MY_SQL_USER}
+      - MY_SQL_PASSWORD=${MY_SQL_PASSWORD}
+      - MY_SQL_DB=${MY_SQL_DB}
+      - MY_SQL_URL=${MY_SQL_URL}
+      - SECRET_KEY=${SECRET_KEY}
