@@ -1,6 +1,6 @@
 from flask import render_template,request
 
-from random import randint
+import random
 
 from application import app
 
@@ -11,7 +11,7 @@ import requests
 
 def codenumber():
     
-    num = random.randint(1)
+    num = random.randint(1,2)
 
     #return {'numbervalue':f'num}'}
 

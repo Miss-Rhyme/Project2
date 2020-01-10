@@ -14,14 +14,18 @@ import requests
 
 def home():
 
-    form = FortuneButton()
+   # form = FortuneButton()
 
-    if request.method=='POST':
+    #if form.is_submitted():
         
-      ##  getfortune = requests.get('http://service4:5004').text
-        fortune=requests.post('http://service4:5004').text
+    fortune = requests.get('http://service4:5004')
+        ## fortune=requests.post('http://service4:5004').text
+        
+    app.logger.info("FORTUNE PLS")
+        
+     #   return fortune
 
-         return render_template('home.html', title='Home', fortune=fortune, form=form)
-    else:
-        return render_template('home1.html', title='Home', form=form)
+    return render_template('home.html', title='Home', fortune=fortune.json()) #, form=form)
+
+   # return render_template('home1.html', title='Home', form=form)
 

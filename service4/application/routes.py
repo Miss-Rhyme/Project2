@@ -1,5 +1,4 @@
-from flask import request
-
+from flask import request, jsonify
 from application import app, db
 
 from application.models import Fortune
@@ -18,16 +17,20 @@ def getcode():
 
     codels = []
 
-    codels.append(getnumber)
     codels.append(getletter)
+    codels.append(getnumber)
+
 
     coderesult = "-".join(codels)
 
+    fortuneresult = Fortune.query.filter_by(code=coderesult).first()
 
-#    fortuneresult = Fortune.query.filter_by(code=coderesult).first()
+    fortune = fortuneresult.fortune
+    code = fortuneresult.code
 
-    #return {'fortune':fortuneresult}
+
+    cookie =  {'fortune' : fortune, 'code' : code}
 
 #    return fortuneresult
 
-    return coderesult
+    return jsonify(cookie)
