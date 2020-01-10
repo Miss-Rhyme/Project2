@@ -6,11 +6,13 @@ import requests
 
 import random
 
-@app.route('/codeletter', methods=['POST'])
+@app.route('/', methods=['GET', 'POST'])
 
 def codeletter():
 
-    letters = ['A', 'B', 'C', 'D']
+   # letters = ['A', 'B', 'C', 'D']
+    
+    letters = ["A"]
 
     letter = random.choice(letters)
 

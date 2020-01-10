@@ -1,17 +1,20 @@
 from flask import render_template,request
 
+from random import randint
+
 from application import app
 
 import requests
 
-import random
 
-@app.route('/codenumber', methods=['POST'])
+@app.route('/', methods=['GET', 'POST'])
 
 def codenumber():
     
-    num = random.randint(1,5)
+    num = random.randint(1)
 
     #return {'numbervalue':f'num}'}
 
-    return num
+    return str(num)
+
+

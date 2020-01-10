@@ -17,10 +17,11 @@ def home():
     form = FortuneButton()
 
     if request.method=='POST':
+        
+      ##  getfortune = requests.get('http://service4:5004').text
+        fortune=requests.post('http://service4:5004').text
 
-        getfortune = requests.get('http://service4:5004/fortune')
-
-        return render_template('home.html', title='Home', Fortune=getfortune, form=form)
-
-    return render_template('home1.html', title='Home', form=form)
+         return render_template('home.html', title='Home', fortune=fortune, form=form)
+    else:
+        return render_template('home1.html', title='Home', form=form)
 
