@@ -1,11 +1,12 @@
 [jenswarm]
 
-p2jenkins
+##p2jenkins
+jenkins-cookie
 swarm-master
 
 [jenonly]
 
-p2jenkins
+jenkins-cookie
 
 [swarmonly]
 
@@ -15,10 +16,10 @@ swarm-master
 [jenonly:vars]
 ansible_user=rimakuma93
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
-ansible_ssh_private_key_file=~/.ssh/ansible_id_rsa
+ansible_ssh_private_key_file=~/.ssh/id_rsa
 
 [swarmonly:vars]
 ansible_user=rimakuma93
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
-ansible_ssh_public_key_file=~/.ssh/ansible_id_rsa.pub
+ansible_ssh_public_key_file=~/.ssh/authorized_keys
 

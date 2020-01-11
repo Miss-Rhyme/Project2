@@ -89,6 +89,12 @@
     service:
       name: docker
       state: started
+  - name: "add jenkins to docker group"
+    user:
+      name: jenkins
+      groups: docker
+      append: true
+      shell: /bin/bash
   - name: "python pip"
     apt:
       name: python-pip
@@ -97,12 +103,18 @@
   - name: "docker sdk"
     pip:
       name: docker
+- hosts: jenonly
+  become: true
+  tasks:
   - name: "docker registry container"
     docker_container:
       name: registry
       image: registry
       ports:
       - "5000:5000"
+- hosts: jenswarm
+  become: true
+  tasks:
   - name: "make daemon.json file"
     file:
       path: /etc/docker/daemon.json
@@ -111,7 +123,7 @@
   - name: "write content to .json file"
     copy:
       content: "{
-                 'insecure_registries' : [jenkins:5000] 
+                 'insecure_registries' : [jenkins-cookie:5000] 
                         }"
       dest: /etc/docker/daemon.json
 - hosts: swarmonly
