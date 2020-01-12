@@ -11,9 +11,8 @@ import requests
 
 def codenumber():
     
-    num = random.randint(1,2)
+    num = random.randint(1,4)
 
-    #return {'numbervalue':f'num}'}
 
     return str(num)
 

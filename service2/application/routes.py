@@ -10,12 +10,8 @@ import random
 
 def codeletter():
 
-   # letters = ['A', 'B', 'C', 'D']
-    
-    letters = ["A"]
+    letters = ['A', 'B', 'C', 'D']
 
     letter = random.choice(letters)
-
-    #return {'lettervalue':f'{letter}'}
 
     return letter
