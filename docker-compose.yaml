@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   nginx:
-          image: project-cookie:5000/nginx:latest
+    image: project-cookie:5000/nginx:latest
     volumes:
     - type: bind
       source: ./nginx.conf
@@ -16,7 +16,7 @@ services:
       - service3
       - service4
   service1:
-          image: jenkins-cookie:5000/service1
+    image: jenkins-cookie:5000/service1
     build:
       context: ./service1
     environment:
@@ -26,7 +26,7 @@ services:
       - MY_SQL_URL=${MY_SQL_URL}
       - SECRET_KEY=${SECRET_KEY}
   service2:
-          image: jenkins-cookie:5000/service2
+    image: jenkins-cookie:5000/service2
     build:
       context: ./service2
     environment:
@@ -37,7 +37,7 @@ services:
       - SECRET_KEY=${SECRET_KEY}
 
   service3:
-          image: jenkins-cookie:5000/service3
+    image: jenkins-cookie:5000/service3
     build:
       context: ./service3
     environment:
@@ -48,7 +48,7 @@ services:
       - SECRET_KEY=${SECRET_KEY}
 
   service4:
-          image: jenkins-cookie:5000/service4
+    image: jenkins-cookie:5000/service4
     build:
       context: ./service4
       dockerfile: Dockerfile
