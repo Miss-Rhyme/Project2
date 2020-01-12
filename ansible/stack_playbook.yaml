@@ -2,9 +2,9 @@
   become_user: jenkins
   tasks:
   - name: "docker compose up in swarm master"
-      docker_compose:
-        project_src: ~/Project2/docker-compose.yaml
-        build: yes
+    docker_compose:
+      project_src: ~/Project2/docker-compose.yaml
+      build: yes
       register: output
   - name: "docker compose down"
     docker_compose:
