@@ -26,11 +26,10 @@ def getcode():
     fortuneresult = Fortune.query.filter_by(code=coderesult).first()
 
     fortune = fortuneresult.fortune
+
     code = fortuneresult.code
 
 
     cookie =  {'fortune' : fortune, 'code' : code}
-
-#    return fortuneresult
 
     return jsonify(cookie)
