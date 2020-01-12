@@ -2,52 +2,43 @@
   become: true
   tasks:
   - name: "docker compose up in swarm master"
-    user: jenkins
     docker_compose:
       project_src: ~/Project2/docker-compose.yaml
       build: yes
-      register: output
+    register: output
   - name: "docker compose down"
-    user: jenkins
     docker_compose:
       project_src: ~/Project2/docker-compose.yaml
       state: absent
   - name: "push nginx image to registry"
-    useer: jenkins
     docker_image:
       name: nginx:latest
       repository: jenkins-cookie:5000/ngingx:latest
       push: yes
   - name: "push service1 image to registry"
-    user: jenkins
     docker_image:
       project_src: ~/Project2/docker-compose.yaml
       tag: ${BUILD_NUMBER}
       push: yes
   - name: "push service2 image to registry"
-    user: jenkins
     docker_image:
       project_src: ~/Project2/docker-compose.yaml
       tag: ${BUILD_NUMBER}
       push: yes
   - name: "push service3 image to registry"
-    user: jenkins
     docker_image:
       project_src: ~/Project2/docker-compose.yaml
       tag: ${BUILD_NUMBER}
       push: yes
   - name: "push service4 image to registry"
-    user: jenkins
     docker_image:
       project_src: ~/Project2/docker-compose.yaml
       tag: ${BUILD_NUMBER}
       push: yes
   - name: "deploy stack"
-    user: jenkins
     docker_stack:
       name: stack
       state: present
       compose: ~/Project2/docker-compose.yaml
   - name: "replicate"
-    user: jenkins
     command: docker service update --replicas 7
