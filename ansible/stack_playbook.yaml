@@ -15,9 +15,29 @@
     docker_compose:
       project_src: ~/Project2
       state: absent
+
   - name: "push service1 image to registry"
-    command: "docker-compose push"
- - name: "deploy stack"
+    docker_image:
+      project_src: ~/Project2/docker-compose.yaml
+      tag: ${BUILD_NUMBER}
+      push: yes
+  - name: "push service2 image to registry"
+    docker_image:
+      project_src: ~/Project2/docker-compose.yaml
+      tag: ${BUILD_NUMBER}
+      push: yes
+  - name: "push service3 image to registry"
+    docker_image:
+      project_src: ~/Project2/docker-compose.yaml
+      tag: ${BUILD_NUMBER}
+      push: yes
+  - name: "push service4 image to registry"
+    docker_image:
+      project_src: ~/Project2/docker-compose.yaml
+      tag: ${BUILD_NUMBER}
+      push: yes
+
+  - name: "deploy stack"
     docker_stack:
       name: stack
       state: present
