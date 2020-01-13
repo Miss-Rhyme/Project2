@@ -1,6 +1,15 @@
 - hosts: swarmonly
   become: true
   tasks:
+  - name: "git clone repo"
+    git:
+      repo: https://github.com/Miss-Rhyme/Project2.git
+      dest: ~/
+      clone: yes
+  - name: "move to correct directory"
+    command: cd Project2/
+  - name: "checkout feature1"
+    command: git checkout feature1
   - name: "docker compose up in swarm master"
     docker_compose:
       project_src: ~/Project2/docker-compose.yaml
