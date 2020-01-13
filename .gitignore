@@ -1,7 +1,6 @@
 /venv/*
 /__pycache__/*
-/application/__pycache__/*
-/tests/__pycache__
+/.coverage1
 /service1/__pycache__/*
 /service2/__pycache__/*
 /service3/__pycache__/*
@@ -10,6 +9,8 @@
 /service2/application/__pycache__/*
 /service3/application/__pycache__/*
 /service4/application/__pycache__/*
+/service2/tests/__pycache__/*
+/service1/tests/__pycache__/*
 
 
 
