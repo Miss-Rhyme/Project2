@@ -8,39 +8,16 @@
       version: feature1
   - name: "docker compose up in swarm master"
     docker_compose:
-      project_src: ~/Project2/docker-compose.yaml
+      project_src: ~/Project2
       build: yes
     register: output
   - name: "docker compose down"
     docker_compose:
-      project_src: ~/Project2/docker-compose.yaml
+      project_src: ~/Project2
       state: absent
-  - name: "push nginx image to registry"
-    docker_image:
-      name: nginx:latest
-      repository: jenkins-cookie:5000/ngingx:latest
-      push: yes
   - name: "push service1 image to registry"
-    docker_image:
-      project_src: ~/Project2/docker-compose.yaml
-      tag: ${BUILD_NUMBER}
-      push: yes
-  - name: "push service2 image to registry"
-    docker_image:
-      project_src: ~/Project2/docker-compose.yaml
-      tag: ${BUILD_NUMBER}
-      push: yes
-  - name: "push service3 image to registry"
-    docker_image:
-      project_src: ~/Project2/docker-compose.yaml
-      tag: ${BUILD_NUMBER}
-      push: yes
-  - name: "push service4 image to registry"
-    docker_image:
-      project_src: ~/Project2/docker-compose.yaml
-      tag: ${BUILD_NUMBER}
-      push: yes
-  - name: "deploy stack"
+    command: "docker-compose push"
+ - name: "deploy stack"
     docker_stack:
       name: stack
       state: present
