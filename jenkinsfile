@@ -1,0 +1,12 @@
+. ~/.bashrc
+docker-compose build
+docker-compose push
+
+ssh swarm-master << EOF
+export BUILD_NUMBER=${BUILD_NUMBER}
+echo ${BUILD_NUMBER}
+docker service update --replicas 3 --image jenkins-cookie:5000/service1:build-${BUILD_NUMBER} stack_service1
+docker service update --replicas 2 --image jenkins-cookie:5000/service2:build-${BUILD_NUMBER} stack_service2
+docker service update --replicas 2 --image jenkins-cookie:5000/service3:build-${BUILD_NUMBER} stack_service3
+docker service update --replicas 2 --image jenkins-cookie:5000/service4:build-${BUILD_NUMBER} stack_service4
+EOF
